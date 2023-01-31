@@ -1,0 +1,16 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: localhost
+   name: using if else condiction or inline condiction
+   become: true
+   gather_facts: no
+
+   vars:
+     x: 5
+     y: 9
+
+   tasks:
+   - debug: 
+       msg:
+       - " the larger no of {{x}} and {{y}} is: {{ x if (x > y) else y}}"
+       - " the smaller  no of {{x}} and {{y}} is: {{ x if (x < y) else y}}"

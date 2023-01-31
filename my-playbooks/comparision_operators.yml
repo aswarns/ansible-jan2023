@@ -1,0 +1,22 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: Working with Comparision Operators 
+   hosts: localhost
+   gather_facts: no
+   
+   vars:
+     x: 34
+     y: 112
+   tasks:
+   - debug:
+       msg:
+       - " the value x: {{x}} and value of y: {{y}}"
+       - "x == y: {{ x == y }}"
+       - "x != y: {{ x != y }}"
+       - "x < y: {{ x < y }}"
+       - "x > y: {{ x > y }}"
+       - "x <= y: {{ x <= y }}"
+       - "x >= y: {{ x >= y }}"
+
+
+   

@@ -1,0 +1,17 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: demo playbook
+   hosts: all
+   remote_user: ashish
+   become: true
+
+   tasks:
+     - yum: name=wget state=latest
+     - yum: name=openssh-server state=latest
+
+ - hosts: all
+   name: install httpd
+   become: true
+   tasks:
+   - yum: name=httpd state=present
+ 

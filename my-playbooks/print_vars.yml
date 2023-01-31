@@ -1,0 +1,15 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: PRITING USING DEBUG-VARS OR VARS
+   hosts: all
+   become: no
+   gather_facts: no
+
+
+   vars:
+ 
+   tasks:
+   - name: Here going to call defined vars 
+     debug:
+#      msg: "the host name is: {{ inventory_hostname }}"
+      var: inventory_hostname     

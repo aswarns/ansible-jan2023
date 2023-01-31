@@ -1,0 +1,17 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: installing dnf on remote server using yum
+   hosts: all
+   become: true
+   gather_facts: no
+   tasks:
+   - name: now running yum 
+     yum: name=dnf state=latest
+   - name: now installing telnet
+     yum: name=telnet state=present
+   - name: removing nano
+     yum: name=nano state=absent
+   - name: removing telnet
+     yum: name=telnet state=absent
+   - name: installing telnet
+     yum: name=telnet state=latest

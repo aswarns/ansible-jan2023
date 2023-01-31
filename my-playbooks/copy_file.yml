@@ -1,0 +1,12 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   name: copying file from source to detination server
+   gather_facts: false
+   become: no
+
+   tasks:
+   - name: task to copy file from local server to destination
+     copy: src=/home/ashish/vars.txt dest=/home/ashish/ansible/vars.txt
+   - name: task to create emtpy file on destination server
+     file: path=/home/ashish/ansible/demo.txt state=touch

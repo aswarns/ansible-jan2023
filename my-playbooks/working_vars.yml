@@ -1,0 +1,30 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: DEFNING VARS AND CALLING IN TASKS
+   hosts: all
+   become: no
+   gather_facts: no
+
+   vars:
+    x: 63
+    y: 23.212
+    z: "Ashish singh"
+    xx: false                         
+
+   tasks:
+    - name: "..Here im going to call defined vars.."
+      debug:
+       var: x
+
+    - name: "..Here im going to call defined vars.."
+      debug:
+       var: y
+
+
+
+    - debug:
+       msg:
+        - "The value os x: {{ x }} and type: {{ x|type_debug }}"
+        - " The value os y: {{ y }} and type: {{ y|type_debug }}"
+        - "The value of z: {{ z }} and type: {{ z|type_debug }}"
+        - " the value of xx: {{ xx }} and type: {{ xx|type_debug }}"

@@ -1,0 +1,21 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: printing msg on display
+   hosts: all
+   gather_facts: no
+   become: yes
+   
+
+   tasks:
+   - name: now debug task displaying on screen 
+     debug: 
+       msg: "...WELCOME TO JUNGLE.."
+
+
+   tasks:
+   - name: debug task displaying on screen 
+     debug: 
+       msg:
+        - "...WELCOME TO JUNGLE.."
+        - "This is 2nd line..priting"
+        - "Printing 3rd line...."

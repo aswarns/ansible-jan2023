@@ -1,0 +1,9 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   name: find os DISTRO
+   gather_facts: true
+   tasks:
+   - debug:
+       msg:
+       - "The distro of server... {{inventory_hostname}} and Distro... {{ansible_distribution}}"

@@ -1,0 +1,23 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   name: install 
+   gather_facts: yes
+   #become: true
+   tasks:
+   - name: installing httpd using yum on centos
+     become: true
+     yum: 
+       name: httpd
+       state: absent
+     when: ansible_distribution ==  "CentOS"
+
+
+   - name: install apache2 using apt on Ubuntu
+     become: true
+     apt:
+       name: apache2
+       state: absent
+     when: ansible_distribution ==  "Ubuntu"
+       
+    

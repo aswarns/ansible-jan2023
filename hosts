@@ -1,0 +1,17 @@
+#[all:children]
+#web
+#db
+
+#[all]
+#master
+
+[db]
+master
+
+[web]
+#clone1
+ubuntu-2204
+
+
+[random]
+#localhost

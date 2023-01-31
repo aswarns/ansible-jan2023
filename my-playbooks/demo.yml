@@ -1,0 +1,9 @@
+---
+- name: demo ansible playbook
+  hosts: all
+  remte_user: ashish
+  become: true
+ 
+
+  tasks:
+ 

@@ -1,0 +1,19 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: localhost
+   name: working with logical operator
+   gather_facts: no
+
+   vars:
+     x: 5
+     y: 7
+     p: [4,5,6]   
+
+   tasks:
+   - debug:
+       msg:
+       - "The value of x: {{x}}, the value of y {{y}}, and p list {{p}}" 
+       - "x < y: {{x < y}} and y in p: {{y in p }}"
+       - "x and operator  y: {{x < y and y in p and 2 < 3 }}"
+       - "x or operator y: {{(x < y) or (y in p) }}"
+       

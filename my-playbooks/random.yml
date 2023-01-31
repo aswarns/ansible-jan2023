@@ -1,0 +1,7 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   gather_facts: true
+   tasks: 
+   - debug:
+       var: inventory_hostname

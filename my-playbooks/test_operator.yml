@@ -1,0 +1,61 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: localhost
+   name: This is about test operator
+   gather_facts: no
+   vars:
+     x: 40
+     my_name: "ansible"
+     my_path: "/home/ashish/ansible/my-playbooks"
+     my_path_not: "/home/ashish/ansible/my-playbooks/link_file"
+   
+   tasks:
+   - debug:
+       msg:
+       - " the value of x: {{x}}"
+       - " the value of y: {{y}}"
+     when: y is defined
+
+
+   - debug:
+       msg:
+       - "PRINTING USING X IS DEFINED {X}}"
+     when: x is defined
+
+   - debug:
+       msg:
+       - "x is defined....: {{x is defined}}"
+       - "y is defined...:  {{y is defined}}"
+       - "z is not defined..: {{z is undefined}}"
+
+      
+       - "-------------"
+       - "my_name is lower: {{my_name is lower}}"
+       - "my_name is lower: {{my_name is upper}}"
+
+
+       - "-------------"
+       - "x is divisible by 2: {{x is divisibleby 2}}"
+       - "x is even: {{x is even }}"
+       - "x is odd: {{x is odd}}"
+   
+       - "-------------"
+       - "x is number: {{ x is number }}"
+
+
+       - "-------------"
+       - "my path is: {{my_path}}"
+
+
+
+       - "-------------"
+       - "my path is file: {{my_path is file}}"
+       - "my path is directory: {{my_path is directory}}"
+
+        
+       - "-------------"
+       - "my_path exists: {{my_path is exists}}"
+
+
+       - "-------------"
+       - " my_path_not is link file: {{ my_path_not is link }}"

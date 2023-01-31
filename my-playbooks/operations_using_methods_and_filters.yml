@@ -1,0 +1,25 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: localhost
+   gather_facts: no
+   vars:
+     x: "This is about Ansible Filters and methods"
+     y: "55"
+     z: [4,5,6,3,4,9,5,2,2]
+   tasks:
+   - debug: 
+       msg:
+       - "{{x.lower()}}"  #  Method (Python Method)
+       - "{{x.upper()}}"  # Method (Python Method)
+       - "{{x.title()}}"  # Method (Python Method)
+       - "{{x|lower}}" #Filter (Inbuild filter)
+       - "{{x|upper}}" #Filter (Inbuild filter)
+       - "{{x|title}}" #Filter (Inbuild filter)
+
+
+       - "{{y|int}}" # int filter
+       - "the max from z in {{z|max}}"
+       - "the minimun no from z is {{z|min}}"
+
+
+       - "{{x.split()}}"

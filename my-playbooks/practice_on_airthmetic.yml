@@ -1,0 +1,16 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: localhost
+   name: Practice on Airthmetic Operators
+   gather_facts: no
+
+   vars:
+    x: 45
+    y: "{{x + 5}}"
+   
+   tasks:
+   - debug:
+       msg: 
+       - "The value of x: {{x}}"
+       - "The value of y: {{y}}"
+  
