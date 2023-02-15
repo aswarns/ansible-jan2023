@@ -1,0 +1,22 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   name: playbook to test register and set-fact 
+   become: true
+   gather_facts: no
+
+   vars:
+   - my_name: "ashish"
+
+   tasks:
+
+   - shell: " bash --version"
+     register: bash_ver
+
+   - set_fact:
+       bash_version: "{{bash_ver.stdout.split('\n')[0].split()[3]}}"
+
+   - debug:
+       #msg: "{{bash_ver.stdout_lines}}"
+       #msg: "{{bash_ver.stdout.split('\n')[0].split()[3]}}"
+       msg: "bash version:- {{bash_version}}"

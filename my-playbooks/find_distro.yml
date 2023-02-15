@@ -1,0 +1,10 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: simple play to install httpd server
+   hosts: all
+   gather_facts: yes
+   tasks:
+     - debug:
+         msg:
+           - "Node is: {{inventory_hostname}} and Distribution is: {{ansible_distribution}}"
+

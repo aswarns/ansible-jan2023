@@ -1,0 +1,17 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: inline condition or if else conditional statements
+   hosts: master
+   gather_facts: no
+   vars:
+     - x: 75
+     - y: 9
+
+   tasks:
+     - debug:
+         msg: "The laster number of {{x}} and {{y}} is: {{x if (x > y) else y}}"
+       #when: x > y
+     #- debug:
+         #msg: "The large no of {{x}} and {{y}} is {{y}}"
+       #when: y > x
+         

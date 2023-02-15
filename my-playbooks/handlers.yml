@@ -1,0 +1,22 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: Working with Handlers
+   hosts: master
+   become: true
+   gather_facts: no
+   tasks:
+      - name: installing httpd
+        yum: 
+            name: httpd
+            state: present
+        notify:
+         - start httpd
+
+   handlers:
+      - name: start httpd
+        service: 
+            name: httpd
+            state: started
+            enabled: yes
+         
+         

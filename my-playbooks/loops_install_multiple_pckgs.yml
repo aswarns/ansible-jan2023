@@ -1,0 +1,13 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: master
+   gather_facts: no
+   become: yes
+   tasks:
+      - name: installing multiple pckages
+        yum:
+            name: "{{ item }}"
+            state: latest
+        loop:
+            - git
+            - firefox

@@ -1,0 +1,26 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: Working with Handlers
+   hosts: master
+   become: true
+   gather_facts: no
+   tasks:
+      - name: installing httpd
+        yum: 
+         name: httpd
+         state: present
+        register: out
+
+      - name: start httpd
+        service: 
+         name: httpd
+         state: started
+         enabled: yes
+        when: out.changed == true
+
+     # - name: display out register out on screen
+        #debug:
+         #msg:
+            #- "{{ out }}"
+            #- "{{ out.results }}"
+            #- "{{ out.changed }}"

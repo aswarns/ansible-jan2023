@@ -1,0 +1,26 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   name: input and output ansible playbook
+   become: true
+   gather_facts: no
+   vars:
+   - x: 45
+   - my_name: "ashish singh"
+   
+   vars_prompt:
+   - name: user_name
+     prompt: "Enter the user name .... "
+     private: no
+
+   - name: password
+     prompt: " Enter the password... "
+     #private: yes
+
+   tasks:
+   - debug:
+       msg:
+       #- " the x value is : {{ x }}"
+       #- " The my_name value is: {{ my_name }}"
+       - "The value is y is: {{ user_name }}"
+       - "The value is y is: {{ password }}"

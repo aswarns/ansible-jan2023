@@ -1,0 +1,30 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: play with 5 tasks
+   hosts: master
+   gather_facts: no
+   tasks:
+      - debug:
+            msg: "this is the first  task" 
+        tags: 1st
+      - debug:
+            msg: "this is the 2nd task" 
+        tags: 2nd
+      - debug:
+            msg: "this is the 3rd task" 
+        tags: 3rd
+      - debug:
+            msg: "this is the 4th  task" 
+        tags: 4th
+      - debug:
+            msg: "this is the  5h task ans ALWAYS TAGS" 
+        tags: 
+         - 5th
+         - always
+
+
+      - debug:
+            msg: "this is the last  task" 
+        tags: 
+         - 1st
+         - never

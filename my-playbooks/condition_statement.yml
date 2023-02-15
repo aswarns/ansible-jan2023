@@ -1,0 +1,29 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: master
+   name: Working with when condirional statement
+   gather_facts: no
+   vars:
+     x: 5
+     y: 67
+     my_list: [5,6,7]
+
+   tasks:
+     - debug:
+        msg:
+          - "The value of x is {{x}}, and value of y {{y}}"
+       #when: x == y
+       #when: x != y
+       #when: x > y
+       when: x < y
+
+     - debug:
+         msg: 
+           - " x is present in my_list"
+       when: x in my_list
+
+
+     - debug:
+         msg:
+           - "x is not present in my_list"
+       when: x not in my_list 

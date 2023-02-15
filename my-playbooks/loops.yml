@@ -1,0 +1,19 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: master
+   gather_facts: no
+   become: yes
+   tasks:
+      #- debug:
+            #msg:
+              # - "The current pkg is: {{item}}"
+      - yum:
+            name: "{{ item }}"
+            state: present
+        loop:
+               - telnet
+               - openssh-server
+               - httpd
+               - perl-CPAN
+               - perl
+               - perl-devel

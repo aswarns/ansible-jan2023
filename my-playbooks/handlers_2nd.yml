@@ -1,0 +1,36 @@
+#!/usr/bin/ansible-playbook
+---
+ - name: installing httpd using handers 
+   hosts: master
+   become: yes
+   gather_facts: no
+   tasks:
+      - name: installing httpd service on server
+        yum:
+            name: httpd
+            state: latest
+        #notify: 
+            #- start httpd
+      
+
+      - name: starting the httpd service
+        service:
+            name: httpd
+            state: started
+        notify:
+            - start httpd
+            - enabling httpd on reboot
+         
+      
+
+   handlers:
+      - name: start httpd
+        service:
+            name: httpd
+            state: started
+
+      - name: enabling httpd on reboot
+        service:
+            name: httpd
+            enabled: yes 
+
