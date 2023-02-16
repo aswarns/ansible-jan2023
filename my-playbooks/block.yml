@@ -1,0 +1,24 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: master
+   name: block using ignore_errors
+   gather_facts: no
+   tasks:
+      - command: "ls /home"
+        register: out_tmp
+      - debug:
+            msg:
+            - "{{ out_tmp.stdout_lines }}"
+
+      - command: "ls /homee"
+        register: out_homee
+        ignore_errors: yes
+      - debug:
+            msg:
+            - "{{ out_homee.stdout_lines }}"
+
+      - command: "ls /home/ashish"
+        register: out_ashish
+      - debug:
+            msg:
+            - "{{ out_ashish.stdout_lines }}"

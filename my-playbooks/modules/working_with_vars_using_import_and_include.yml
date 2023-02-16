@@ -1,0 +1,9 @@
+#!/usr/bin/ansible-playbook
+---
+  - name: Simple play to understand import_vars and include_vars
+    hosts: all
+    gather_facts: yes
+    tasks:
+      - include_vars: required_variable_for_{{ansible_distribution}}.yml
+      - debug:
+          msg: " PKG name= {{pkg_name}}"

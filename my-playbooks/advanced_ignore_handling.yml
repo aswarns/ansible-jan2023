@@ -1,0 +1,39 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   gather_facts: yes
+   tasks:
+      - name: installing httpd on Redhat OS Destro
+        yum:
+            name: httpd
+            state: latest
+        when: ansible_os_family == "RedHat"
+        become: yes
+
+      - name: starting httpd service
+        service:
+            name: httpd
+            state: started
+            enabled: yes 
+        when: ansible_os_family == "RedHat"
+        become: yes
+
+      - name: installing apache2 on Debian OS Destro
+        yum:
+            name: apache2
+            state: latest
+        when: ansible_os_family == "Debian"
+        become: yes
+
+      - name: starting httpd service
+        service:
+            name: apache2
+            state: started
+            enabled: yes 
+        when: ansible_os_family == "Debian"
+        become: yes
+
+
+      - debug:
+            msg:
+               - "Succesfully completed all tasks"

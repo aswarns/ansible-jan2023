@@ -1,0 +1,35 @@
+#!/usr/bin/ansible-playbook
+---
+  - name: Discovery play
+    hosts: all
+    gather_facts: yes
+    tasks:
+      - name: Fiding OS name
+        shell: "uname"
+        register: os_name
+      - name: finding uptime
+        shell: "uptime"
+        register: up_time
+      - name: Displaying Discovery info
+        debug:
+          msg: "{{inventory_hostname}},{{ansible_system}},{{ansible_os_family}}, {{ansible_distribution}},  {{os_name.stdout}} {{up_time.stdout}}"
+      - name: removing old discovery.csv file
+        file:
+          dest: ./Discovery.csv
+          state: absent
+        delegate_to: localhost
+        run_once: yes
+
+
+      - name: Creating Discovery.csv file with headers
+        copy:
+          dest: ./Discovery.csv
+          content: "Server_name, OS_Family, OS_name, OS_Distribution, uptime\n"
+        delegate_to: localhost
+        run_once: yes
+    
+      - name: updating info for each server in csv file
+        lineinfile:
+          path: ./Discovery.csv
+          line: "{{inventory_hostname}},{{ansible_system}},{{ansible_os_family}}, {{ansible_distribution}},  {{os_name.stdout}} {{up_time.stdout}}"
+        delegate_to: localhost

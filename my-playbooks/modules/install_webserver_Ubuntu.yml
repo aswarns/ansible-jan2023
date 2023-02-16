@@ -1,0 +1,14 @@
+---
+  - name: installing apache2 on Ubuntu servers
+    become: yes
+    apt:
+      name: apache2
+      state: latest
+  - name: starting and enabling apache2 service
+    become: yes
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+
+

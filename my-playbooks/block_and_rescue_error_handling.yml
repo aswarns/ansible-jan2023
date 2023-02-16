@@ -1,0 +1,22 @@
+#!/usr/bin/ansible-playbook
+---
+  - hosts: master
+    name: block_and_rescue_error_handling
+    gather_facts: no
+    tasks:
+      - block:
+        - name: Finding files in /home/ashish/ansible/my-playbook
+          command: "ls -l /home/ashish/ansible/my-playbook"
+          #command: "ls -l /home/ashish/ansible/my-playbooks"
+          register: home_out
+        - debug:    
+            msg:
+              - "this is block's first condition"
+        rescue:
+          - debug:
+              msg: "The given path ~/ansible/my-playbook is not a valid path"        
+        always:
+          - debug:
+              msg: " This will always execute"
+              
+

@@ -1,0 +1,6 @@
+---
+  - name: installing java on Redhat servers
+    become: yes
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
