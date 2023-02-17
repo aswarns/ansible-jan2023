@@ -1,0 +1,35 @@
+#!/usr/bin/ansible-playbook
+---
+ - hosts: all
+   name: install 
+   gather_facts: yes
+   become: true
+   tasks:
+   - block:
+           - name: installing httpd using yum on centos
+             yum: 
+               name: httpd
+               state: latest
+           - name: starting httpd service
+             service:
+               name: httpd
+               state: started
+               enabled: yes
+           - template:
+               src: index.html.j2
+               dest: /usr/share/httpd/noindex/index.html
+     when: ansible_distribution ==  "CentOS"
+
+   - block:
+           - name: install apache2 using apt on Ubuntu
+             apt:
+               name: apache2
+               state: latest
+           - template:
+               src: index.html.j2
+               dest: /var/www/html/index.html
+           - name:
+             service:
+                name: apache2
+                state: restarted
+     when: ansible_distribution ==  "Ubuntu"

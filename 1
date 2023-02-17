@@ -1,0 +1,8 @@
+---
+  - name: using roles
+    hosts: master
+    gather_facts: no
+    become: yes
+    roles:
+      - update_repos
+      - xyz_java

@@ -1,0 +1,11 @@
+---
+# vars file for roles/xyz_tomcat
+
+  tomcat_port: 8090
+  req_java: java-1.8.0-openjdk
+  set_java: jre-1.8.0-openjdk
+  tomcat_ver: apache-tomcat-9.0.71.tar.gz
+  tomcat_path_old: /usr/local/apache-tomcat-9.0.71
+  tomcat_path: /usr/local/latest
+  req_tomcat_var:  "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/{{tomcat_ver}}"
+

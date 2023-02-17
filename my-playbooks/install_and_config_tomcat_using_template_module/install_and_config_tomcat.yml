@@ -1,0 +1,56 @@
+#!/usr/bin/ansible-playbook
+---
+  - name: installing and config Tomcat from scratch using template
+    hosts: master
+    gather_facts: no
+    become: yes
+    vars:
+      tomcat_port: 8090 
+      req_java: java-1.8.0-openjdk
+      set_java: jre-1.8.0-openjdk
+      tomcat_ver: apache-tomcat-9.0.71.tar.gz
+      tomcat_path_old: /usr/local/apache-tomcat-9.0.71
+      tomcat_path: /usr/local/latest
+      req_tomcat_var:  "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/{{tomcat_ver}}"
+    tasks:
+      - name: Updating repos
+        yum:
+          name: "*"
+          state: present
+      - name: Installing required java
+        yum: 
+          name: "{{ req_java }}"
+          state: present
+      - name: Setting default java
+        alternatives: 
+          name: java
+          link: /usr/bin/java
+          path: /usr/lib/jvm/{{set_java}}/bin/java
+
+      - name: Downloading required Tomcat from url
+        get_url:
+          url: "{{ req_tomcat_var }}"
+          dest: /usr/local
+
+      - name: Extrating downloaded tomcat
+        unarchive:
+          src: "/usr/local/{{tomcat_ver}}"
+          dest: /usr/local
+          remote_src: yes
+      - name: Displaying /usr/local/tomcat version
+        shell: " ls -l /usr/local/ |grep apache-tomcat-*"
+        register: ust_local_dir
+      - debug:
+          msg:
+          - "{{ust_local_dir.stdout_lines}}"
+
+      - name: Renaming tomcat home
+        command: mv "{{tomcat_path_old}}" "{{tomcat_path}}"
+
+      - name: Replacing default port with required port
+        template: 
+          src: server.xml.j2
+          dest: /usr/local/latest/conf/server.xml
+
+      - name: Running/Starting  tomcat
+        shell: nohup /usr/local/latest/bin/startup.sh &
