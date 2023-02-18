@@ -1,0 +1,16 @@
+#!/usr/bin/ansible-playbook
+---
+- name: Transfer and execute a script.
+  hosts: clone2
+  become: yes
+  gather_facts: no
+  tasks:
+     - name: Transfer the script
+       copy: src=os.sh dest=/var/os.sh mode=0777
+
+     - name: Execute the script
+       command: sh /var/os.sh
+       register: health
+     - debug:
+        msg:
+          - "{{ health.stdout_lines }}"         
