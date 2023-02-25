@@ -1,6 +1,9 @@
 ./restart.yaml  --extra-vars "domain='global' restart_sshd=yes adlush=yes"
 
 
+./restart.yaml  --extra-vars "domain='gated' restart_sshd=no adlush=no"
+
+
 
 #!/usr/bin/ansible-playbook
 ---
