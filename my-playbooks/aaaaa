@@ -1,0 +1,82 @@
+#!/usr/bin/ansible-playbook
+---
+-
+  name: restarting ssh with errors
+  hosts: master
+  gather_facts: no
+  become: yes
+  vars:
+    domain: {default "exchad"}
+    zone: {default "prod"} #this will be used while ADJOIN in future
+    restart_sshd: {default 'no'}
+    adlush: {default 'no'}
+  tasks:
+    #checking service is runing
+  - name: checking is BOKS is running
+    shell: "ps -ef |grep /usr/sbin/sshd|egrep -v grep"
+    register: srv_status
+    ignore_errors: true
+
+
+#####
+  - name: bouncing ssh service on server
+    service:
+      name: httpd
+      state: restarted
+    register: result
+    ignore_errors: true
+    when: restart_sshd == "yes"
+
+  - block:
+    - name: ERRORS WHILE RESTARTING SERVICE
+      debug:
+        msg:
+          - "There are errors and unable to restart the service"
+      when: result.failed == true and restart_sshd == "yes"
+
+    - name: priting o/p of the restraging sshd
+      debug:
+        msg:
+          - " Succesfully restarted the SSHD Service"
+      when: result.failed == false and srv_status.failed == false and restart_sshd == "yes"
+    #ignore_errors: true
+    when: restart_sshd == "yes"
+
+################
+  - block:
+    - name: printing exchad domain
+      debug:
+        msg: " this is  {{ domain }} domain"
+      when: domain == "global"
+
+    - name: printing gated domain
+      debug:
+        msg: "This is ... {{ domain }} domain"
+      when: domain == "gated"
+    when: domain == "gated" or  domain == "global"
+
+  - name: no domain defined
+    debug:
+      msg: "It is neither in exchad global  or dmz gated."
+    when: domain != "gated" and domain != "global"
+
+##########
+
+  - block:
+    - name: FORCE ADFUSH
+      debug:
+        msg:
+        - " {{adlush }}"
+    - name: executing adlush  no
+      #shell: "adlush -f"
+      shell: "ps -ef |grep ssh"
+    - name: restarting httpd service now
+      service:
+        name: httpd
+        state: restarted
+    #- name: checking adjoined or nor final call
+
+    when: adlush == "yes"
+
+
+...
