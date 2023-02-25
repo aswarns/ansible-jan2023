@@ -13,19 +13,34 @@
   gather_facts: no
   become: yes
   vars:
-    domain: {default "exchad"}
-    zone: {default "prod"} #this will be used while ADJOIN in future
-    restart_sshd: {default 'no'}
-    adlush: {default 'no'}
+    domain: {default "exchad"} # Options exchad or gated.... need to give this option to end user
+    zone: {default "prod"} #this will be used while ADJOIN in future .... need to give this option to end user
+    restart_sshd: {default 'no'} # Options yes or no .... need to give this option to end user
+    adlush: {default 'no'} # Options yes or no .... need to give this option to end user
+    known_domain1: "google.com" # allowing only global and dmz
+    known_domain2:  "yahoo.com" # allowing only global and dmz
+    #adleave need to add
+
   tasks:
     #checking service is runing
-  - name: checking is ssh is running
+  - name: checking is BOKS is running
     shell: "ps -ef |grep /usr/sbin/sshd|egrep -v grep"
     register: srv_status
     ignore_errors: true
+#########################
+  - name: Checking server is in google.com
+    debug:
+      msg:
+        - "{{ ansible_domain }}"
+    when: known_domain1 in ansible_domain
 
 
-#####
+  - name: checking if server is in yahoo.com
+    debug:
+      msg:
+        - "{{ ansible_domain }} domain is not allowed using this job."
+    when: known_domain2 in ansible_domain
+#############################################
   - name: bouncing ssh service on server
     service:
       name: httpd
@@ -41,20 +56,24 @@
           - "There are errors and unable to restart the service"
       when: result.failed == true and restart_sshd == "yes"
 
+### need to add adinfo -m section
+
     - name: priting o/p of the restraging sshd
       debug:
         msg:
           - " Succesfully restarted the SSHD Service"
       when: result.failed == false and srv_status.failed == false and restart_sshd == "yes"
     #ignore_errors: true
-    when: restart_sshd == "yes"
+    when: restart_sshd == "yes" #need to add here when adinfo-m is success
 
 ################
   - block:
     - name: printing exchad domain
       debug:
         msg: " this is  {{ domain }} domain"
+        #Need to add adjoin
       when: domain == "global"
+    
 
     - name: printing gated domain
       debug:
@@ -85,5 +104,11 @@
 
     when: adlush == "yes"
 
-
+#################
+  - block:
+      #name: need to add adleave 
+      #adleave 
+      #adobject reset
+      #adjoin
+##########
 ...
