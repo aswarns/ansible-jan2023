@@ -1,3 +1,7 @@
+./restart.yaml  --extra-vars "domain='global' restart_sshd=yes adlush=yes"
+
+
+
 #!/usr/bin/ansible-playbook
 ---
 -
@@ -12,7 +16,7 @@
     adlush: {default 'no'}
   tasks:
     #checking service is runing
-  - name: checking is BOKS is running
+  - name: checking is ssh is running
     shell: "ps -ef |grep /usr/sbin/sshd|egrep -v grep"
     register: srv_status
     ignore_errors: true
