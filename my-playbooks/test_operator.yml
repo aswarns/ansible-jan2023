@@ -59,3 +59,31 @@
 
        - "-------------"
        - " my_path_not is link file: {{ my_path_not is link }}"
+       
+       
+       
+       
+       
+       
+       
+ansible-playbook variables_playbook.yaml --extra-vars "extra_vars_key='gated' domain='gated'"  
+ansible-playbook variables_playbook.yaml --extra-vars "extra_vars_key='gated' domain='gbated'"
+       
+   vars:
+    domain: {default "exchad"}
+    zone: {default "prod"} #this will be used while ADJOIN in future
+  tasks:
+    - name: printing exchad domain
+      debug:
+        msg: " this is global domian {{ extra_vars_key }}"
+      when: domain == "global"
+
+    - name: printing gated domain
+      debug:
+        msg: "This is gated domain {{ extra_vars_key }}"
+      when: domain == "gated"
+
+    - name: no domain defined
+      debug:
+        msg: "It is neither in exchad global  or dmz gated,  {{ extra_vars_key }}"
+      when: domain != "gated" and domain != "global"
