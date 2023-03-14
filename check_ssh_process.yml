@@ -2,7 +2,7 @@
 -
   hosts: localhost
   gather_facts: no
-  become: yes
+  #become: yes
   tasks:
   - name: Checking if sshd process is running or not
     shell: "ps -ef |grep -i /uuuuusr/sbin/sshd |egrep -v grep"
