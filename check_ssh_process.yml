@@ -4,7 +4,7 @@
   gather_facts: no
   become: yes
   tasks:
-  - name: aaa
+  - name: Checking if sshd process is running or not
     shell: "ps -ef |grep -i /uuuuusr/sbin/sshd |egrep -v grep"
     register: name
     ignore_errors: yes
