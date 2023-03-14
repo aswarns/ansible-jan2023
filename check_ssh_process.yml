@@ -1,11 +1,11 @@
+#!/usr/bin/ansible-playbook
 ---
 -
   hosts: localhost
   gather_facts: no
-  #become: yes
   tasks:
   - name: Checking if sshd process is running or not
-    shell: "ps -ef |grep -i /uuuuusr/sbin/sshd |egrep -v grep"
+    shell: "ps -ef |grep -i /usr/sbin/sshd |egrep -v grep"
     register: name
     ignore_errors: yes
 
