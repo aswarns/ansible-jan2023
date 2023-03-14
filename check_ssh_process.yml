@@ -1,0 +1,24 @@
+---
+-
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  tasks:
+  - name: aaa
+    shell: "ps -ef |grep -i /uuuuusr/sbin/sshd |egrep -v grep"
+    register: name
+    ignore_errors: yes
+
+  - name: setting global value for ps -ef | sshd
+    set_fact:
+      new_name: "{{ name.rc }}"
+
+  - name: Checking is process is NOT running
+    debug:
+      msg: "my name is : PROCESS IS NOT RUNNING"
+    when: name.rc != 0
+
+  - name: Checking is process is NOT running
+    debug:
+      msg: "my name is  PROCESS  RUNNING... {{ name.stdout}}"
+    when: name.rc == 0
